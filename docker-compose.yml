@@ -1,0 +1,30 @@
+x-tg-audio-service: &tg-audio-service
+  build: .
+  env_file:
+    - .env
+  volumes:
+    - ../Media/musics:/music
+    - ./sessions:/app/session
+
+services:
+  tg-audio-downloader:
+    <<: *tg-audio-service
+    build: .
+    container_name: tg-audio-downloader
+    restart: unless-stopped
+
+  tg-audio-login:
+    <<: *tg-audio-service
+    profiles:
+      - login
+    stdin_open: true
+    tty: true
+    restart: "no"
+
+  tg-audio-diagnose:
+    <<: *tg-audio-service
+    profiles:
+      - diagnose
+    environment:
+      COMMAND: diagnose
+    restart: "no"
