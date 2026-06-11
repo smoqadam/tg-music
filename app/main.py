@@ -187,8 +187,6 @@ async def main() -> None:
         await message.download_media(file=str(destination))
         logger.info("Saved %s", destination)
 
-        await client.send_message(command_chat, f"✅ {artist} — {title}")
-
     logger.info("Listening for links and downloads...")
     await client.run_until_disconnected()
 
